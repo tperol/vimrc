@@ -22,6 +22,8 @@ set expandtab
 set encoding=utf-8
 set spell spelllang=en_us
 set colorcolumn=80
+set splitright
+set splitbelow
 
 " Keys remapped
 

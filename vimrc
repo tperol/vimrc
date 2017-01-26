@@ -4,10 +4,8 @@
 " Created: 2016-01-25
 " ============================================
 " Configuration and Plugins
-" (inspired by mgharbi settings)
 "
 " ============================================
-"
 "
 "
 set colorcolumn=80
@@ -22,7 +20,6 @@ set ruler
 set background=dark
 set number
 set hidden
-filetype plugin indent on
 set textwidth=79
 set softtabstop=4
 set shiftround
@@ -35,7 +32,31 @@ set encoding=utf-8
 set spell spelllang=en_us
 set splitright
 set splitbelow
+set backspace=indent,eol,start "delete
+set ai " Auto indent
+set si "Smart indent
+set scrolloff=1 "minimum line between cursor and window edge"
+set showcmd "show partially typed commands"
+set showmatch "show parenthesis matching"
+set viminfo='0,\"100,           
+set noerrorbells
+set textwidth=0 
+set wrapmargin=0
+set ttyfast
+set lazyredraw
+set regexpengine=1
 
+
+" ============================================
+" Aesthetics
+" ============================================
+syntax on                       " Use color syntax highlighting.
+filetype plugin on
+filetype indent on
+let g:solarized_termtrans=1
+colorscheme solarized
+set bg=dark
+colorscheme solarized
 
 
 " ============================================
@@ -52,88 +73,62 @@ Plugin 'gmarik/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
-" Plugin 'vim-scripts/a.vim'
-" Plugin 'Raimondi/delimitMate'
-" Plugin 'tpope/vim-surround'
-" Plugin 'kien/ctrlp.vim'
-" Plugin 'godlygeek/tabular'
-" Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'vim-scripts/a.vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'tommcdo/vim-exchange'
+Plugin 'plasticboy/vim-markdown'
 Plugin 'tpope/vim-commentary'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'tpope/vim-fugitive'
-" Plugin 'Lokaltog/vim-easymotion'
-" Plugin 'mileszs/ack.vim'
-" Plugin 'gregsexton/gitv'
-" Plugin 'sjl/gundo.vim'
-" Plugin 'google/vim-ft-bzl'
-" Plugin 'Valloric/YouCompleteMe'
+Plugin 'tpope/vim-surround'
+Plugin 'kien/ctrlp.vim'
+Plugin 'godlygeek/tabular'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'mileszs/ack.vim'
+Plugin 'gregsexton/gitv'
+Plugin 'sjl/gundo.vim'
+Plugin 'Valloric/YouCompleteMe'
 Plugin 'majutsushi/tagbar'
-" Plugin 'vim-scripts/MatlabFilesEdition'
+Plugin 'vim-scripts/MatlabFilesEdition'
 "
 call vundle#end()
 filetype plugin indent on    " required
 
 
+" ============================================
 " Keys remapped
-
+" ============================================
+let mapleader=","
 inoremap jk <ESC>
-
-" let mapleader=","
-map }leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
-map <leader>es :sp <C-R>=expand("%:p:h") . "/" <CR>
-map <leader>ev :vsp <C-R>=expand("%:p:h") . "/" <CR>
-map <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
+nnoremap ; :
 nmap oo o<Esc>k
 nmap OO O<Esc>j
 
-" Python settings
 
-let python_highlight_all=1
+" ============================================
+"Search options
+" ============================================
+" 
+nnoremap / /\v
+vnoremap / /\v
+nmap <silent> ,/ :nohlsearch<CR>
+set ignorecase                  " case insensitive search
+set smartcase
+set incsearch                   " find as you type search
+set gdefault                    " global search and replace
+set hlsearch                   " highlight search terms
 
-" " Tagbar
-nnoremap <leader>l :Tagbar<CR>
-"
-" Aesthetics
-syntax on                       " Use color syntax highlighting.
-filetype plugin on
-filetype indent on
-let g:solarized_termtrans=1
-colorscheme solarized
-set bg=dark
-colorscheme solarized
+" ============================================
+" Windows navigation
+" ============================================
+map <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
+map <leader>es :sp <C-R>=expand("%:p:h") . "/" <CR>
+map <leader>ev :vsp <C-R>=expand("%:p:h") . "/" <CR>
+map <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
-" Remap tab for autocompletiong
-function! Tab_Or_Complete()
-    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
-        return "\<C-N>"
-    else
-        return "\<Tab>"
-    endif
-endfunction
-inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
-set dictionary="/usr/dict/words"
-
-" Strip trailing whitespace
-function! <SID>StripTrailingWhitespaces()
-    " Preparation: save last search, and cursor position.
-    let _s=@/
-    let l = line(".")
-    let c = col(".")
-    " Do the business:
-    %s/\s\+$//e
-    " Clean up: restore previous search history, and cursor position
-    let @/=_s
-    call cursor(l, c)
-endfunction
-" Remap strip trailing whitespace to F5
-nnoremap <silent> <F6> :call <SID>StripTrailingWhitespaces()<CR>
-" Apply to all python and javascript files
-autocmd BufWritePre *.py,*.js :call <SID>StripTrailingWhitespaces()
-
-" Gundo remap
-nnoremap <F5> :GundoToggle<CR>
-
-" Navigation between windows using directions
+" Navigation between windows using keys 
 nmap <c-h> <c-w>h
 nmap <c-l> <c-w>l
 nmap <c-j> <c-w>j
@@ -145,12 +140,125 @@ while i <= 9
     execute 'nnoremap <Leader>' . i . ' :' . i . 'wincmd w<CR>'
         let i = i + 1
         endwhile
+
+
+" ============================================
+"  shift key fixes
+" ============================================
+if !exists('g:spf13_no_keyfixes')
+    if has("user_commands")
+        command! -bang -nargs=* -complete=file E e<bang> <args>
+        command! -bang -nargs=* -complete=file W w<bang> <args>
+        command! -bang -nargs=* -complete=file Wq wq<bang> <args>
+        command! -bang -nargs=* -complete=file WQ wq<bang> <args>
+        command! -bang Wa wa<bang>
+        command! -bang WA wa<bang>
+        command! -bang Q q<bang>
+        command! -bang QA qa<bang>
+        command! -bang Qa qa<bang>
+    endif
+    cmap Tabe tabe
+endif 
+
+
+" ============================================
+" Python settings and compilation
+" ============================================
+let python_highlight_all=1
+
+" ============================================
+" " Tagbar
+" ============================================
+nnoremap <leader>l :Tagbar<CR>
+
+" ============================================
+" Gundo , undo tree
+" ============================================
+nnoremap <leader>z :GundoToggle<CR>
+
+" ============================================
+" CtrlP
+" ============================================
+nnoremap <leader>t :CtrlPMixed<CR>
+
+" ============================================
+" Nerd Tree
+" ============================================
+nnoremap <leader>r :NERDTreeToggle<CR>
+let NERDTreeIgnore = ['\.pyc$']
+
+" ============================================
+" Gitv
+" ============================================
+nnoremap <leader>g :Gitv<CR>
+nnoremap <leader>h :Gitv!<CR>
+
+
+" ============================================
+"" call Ack
+" ============================================
+nnoremap <leader>a :Ack
+
+
+" ============================================
+" Tabs handling
+" ============================================
+nnoremap <leader>q :tabp<CR>
+nnoremap <leader>w :tabn<CR>
+nnoremap <leader>e :tabnew<CR>
+
+" ============================================
+" Remap tab for autocompletion with dictionary
+" ============================================
+function! Tab_Or_Complete()
+    if col('.')>1 && strpart( getline('.'), col('.')-2, 3 ) =~ '^\w'
+        return "\<C-N>"
+    else
+        return "\<Tab>"
+    endif
+endfunction
+inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
+set dictionary="/usr/dict/words"
+
+" ============================================
+" Ignore these folders for fuzzy matching
+" ============================================
+set wildignore=data/**,lib/**,build/**,import/**,log/**,external/**,output/**,bin/**,doc/**,third_party/**
+set wildmenu                  " show list instead of just completing
+" " command <Tab> completion, list matches, then longest common part, then
+" all.
+set wildmode=list:longest,full
+
+" ============================================
+" Strip trailing whitespace
+" ============================================
+function! <SID>StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+" Apply to all python and javascript files
+autocmd BufWritePre *.py,*.js :call <SID>StripTrailingWhitespaces()
+
+
+
+" ============================================
 " vertical splitting when diff
+" ============================================
 set diffopt+=vertical
 
-" autocmd bufnewfile *.py so /Users/tperol/py_header.txt
-" autocmd bufnewfile *.py exe "1," . 6 . "g/File Name :.*/s//File Name : " .expand("%")
-" autocmd bufnewfile *.py exe "1," . 6 . "g/Creation Date :.*/s//Creation Date : " .strftime("%d-%m-%Y")
-" autocmd Bufwritepre,filewritepre *.py execute "normal ma"
-" autocmd Bufwritepre,filewritepre *.py exe "1," . 6 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
-" autocmd bufwritepost,filewritepost *.py execute "normal `a"
+" ============================================
+" Python file headers
+" ============================================
+autocmd bufnewfile *.py so /Users/tperol/py_header.txt
+autocmd bufnewfile *.py exe "1," . 6 . "g/File Name :.*/s//File Name : " .expand("%")
+autocmd bufnewfile *.py exe "1," . 6 . "g/Creation Date :.*/s//Creation Date : " .strftime("%d-%m-%Y")
+autocmd Bufwritepre,filewritepre *.py execute "normal ma"
+autocmd Bufwritepre,filewritepre *.py exe "1," . 6 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
+autocmd bufwritepost,filewritepost *.py execute "normal `a"

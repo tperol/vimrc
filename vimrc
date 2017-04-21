@@ -23,8 +23,6 @@ set hidden
 set textwidth=79
 set softtabstop=4
 set shiftround
-set autoindent
-set smartindent
 set tabstop=4
 set shiftwidth=4
 set expandtab
@@ -50,9 +48,12 @@ set regexpengine=1
 " ============================================
 " Aesthetics
 " ============================================
-syntax on                       " Use color syntax highlighting.
+" syntax on                       " Use color syntax highlighting.
+syntax enable
 filetype plugin on
 filetype indent on
+" colorscheme monokai
+
 let g:solarized_termtrans=1
 colorscheme solarized
 set bg=dark
@@ -71,6 +72,7 @@ Plugin 'gmarik/Vundle.vim'
 "
 " " Plugins
 Plugin 'scrooloose/nerdtree'
+Plugin 'benmills/vimux'
 Plugin 'SirVer/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'vim-scripts/a.vim'
@@ -84,6 +86,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'kien/ctrlp.vim'
 Plugin 'godlygeek/tabular'
 Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'tmux-plugins/tpm'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'mileszs/ack.vim'
@@ -92,6 +95,7 @@ Plugin 'sjl/gundo.vim'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'majutsushi/tagbar'
 Plugin 'vim-scripts/MatlabFilesEdition'
+Plugin 'vim-latex/vim-latex'
 "
 call vundle#end()
 filetype plugin indent on    " required
@@ -102,6 +106,7 @@ filetype plugin indent on    " required
 " ============================================
 let mapleader=","
 inoremap jk <ESC>
+inoremap kj <ESC>
 nnoremap ; :
 nmap oo o<Esc>k
 nmap OO O<Esc>j
@@ -123,15 +128,16 @@ set hlsearch                   " highlight search terms
 " ============================================
 " Windows navigation
 " ============================================
+" Creating new panes and windows
 map <leader>ew :e <C-R>=expand("%:p:h") . "/" <CR>
 map <leader>es :sp <C-R>=expand("%:p:h") . "/" <CR>
 map <leader>ev :vsp <C-R>=expand("%:p:h") . "/" <CR>
 map <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 " Navigation between windows using keys 
+nmap <c-j> <c-w>j
 nmap <c-h> <c-w>h
 nmap <c-l> <c-w>l
-nmap <c-j> <c-w>j
 nmap <c-k> <c-w>k
 
 " Navigation between windows using window number
@@ -141,8 +147,11 @@ while i <= 9
         let i = i + 1
         endwhile
 
+" Increase the size of the windows
+nnoremap <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
-" ============================================
+" ===========================================
 "  shift key fixes
 " ============================================
 if !exists('g:spf13_no_keyfixes')
@@ -165,11 +174,23 @@ endif
 " Python settings and compilation
 " ============================================
 let python_highlight_all=1
+let g:vim_markdown_folding_disabled = 1
+let g:markdown_syntax_conceal = 0
 
-" ============================================
+" ===========================================
 " " Tagbar
 " ============================================
-nnoremap <leader>l :Tagbar<CR>
+nnoremap <leader>y :Tagbar<CR>
+
+" ===========================================
+" " Vimux
+" ============================================
+" Prompt for a command to run
+map <Leader>vp :VimuxPromptCommand<CR>
+" Run last command executed by VimuxRunCommand
+map <Leader>vl :VimuxRunLastCommand<CR>
+" Inspect runner pane
+map <Leader>vi :VimuxInspectRunner<CR>
 
 " ============================================
 " Gundo , undo tree
@@ -193,6 +214,11 @@ let NERDTreeIgnore = ['\.pyc$']
 nnoremap <leader>g :Gitv<CR>
 nnoremap <leader>h :Gitv!<CR>
 
+" ============================================
+" tmux save sessions
+" ============================================
+" Write all buffers before navigating from Vim to tmux pane
+let g:tmux_navigator_save_on_switch =2"
 
 " ============================================
 "" call Ack
@@ -246,7 +272,11 @@ endfunction
 " Apply to all python and javascript files
 autocmd BufWritePre *.py,*.js :call <SID>StripTrailingWhitespaces()
 
-
+" ============================================
+" Use Q for formatting the current paragraph (or selection)
+" ============================================
+vmap Q gq
+nmap Q gqap
 
 " ============================================
 " vertical splitting when diff
@@ -262,3 +292,10 @@ autocmd bufnewfile *.py exe "1," . 6 . "g/Creation Date :.*/s//Creation Date : "
 autocmd Bufwritepre,filewritepre *.py execute "normal ma"
 autocmd Bufwritepre,filewritepre *.py exe "1," . 6 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
 autocmd bufwritepost,filewritepost *.py execute "normal `a"
+
+" ============================================
+" Tab for YouCompleteMe 
+" ============================================
+let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
+
+

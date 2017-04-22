@@ -151,6 +151,9 @@ while i <= 9
 nnoremap <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
+" Go out of brackets
+inoremap <C-e> <C-o>A
+
 " ===========================================
 "  shift key fixes
 " ============================================

@@ -106,7 +106,6 @@ filetype plugin indent on    " required
 " ============================================
 let mapleader=","
 inoremap jk <ESC>
-inoremap kj <ESC>
 nnoremap ; :
 nmap oo o<Esc>k
 nmap OO O<Esc>j

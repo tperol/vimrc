@@ -110,6 +110,7 @@ Plugin 'sjl/gundo.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'vim-scripts/MatlabFilesEdition'
+Plugin 'tell-k/vim-autopep8'
 Plugin 'vim-latex/vim-latex'
 "
 call vundle#end()
@@ -300,20 +301,13 @@ nmap Q gqap
 set diffopt+=vertical
 
 " ============================================
-" Python file headers
-" ============================================
-autocmd bufnewfile *.py so /Users/tperol/py_header.txt
-autocmd bufnewfile *.py exe "1," . 6 . "g/File Name :.*/s//File Name : " .expand("%")
-autocmd bufnewfile *.py exe "1," . 6 . "g/Creation Date :.*/s//Creation Date : " .strftime("%d-%m-%Y")
-autocmd Bufwritepre,filewritepre *.py execute "normal ma"
-autocmd Bufwritepre,filewritepre *.py exe "1," . 6 . "g/Last Modified :.*/s/Last Modified :.*/Last Modified : " .strftime("%c")
-autocmd bufwritepost,filewritepost *.py execute "normal `a"
-
-" ============================================
 " Tab for YouCompleteMe 
 " ============================================
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
 let g:PyLintCWindow = 1
-let g:PyLintSigns = 1
+let g:PyLintSigns = 1  
 
-
+" ============================================
+" Autopep8 mapping 
+" ============================================
+nnoremap <leader>p :Autopep8<CR>

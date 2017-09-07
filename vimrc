@@ -149,7 +149,7 @@ map <leader>ev :vsp <C-R>=expand("%:p:h") . "/" <CR>
 map <leader>et :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 " Navigation between windows using keys 
-nmap <c-j> <c-w>j
+nmap <c-n> <c-w>j
 nmap <c-h> <c-w>h
 nmap <c-l> <c-w>l
 nmap <c-k> <c-w>k

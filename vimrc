@@ -224,7 +224,7 @@ nnoremap <leader>t :CtrlPMixed<CR>
 " ============================================
 " Nerd Tree
 " ============================================
-nnoremap <leader>r :NERDTreeToggle<CR>
+nnoremap <leader>q :NERDTreeToggle<CR>
 let NERDTreeIgnore = ['\.pyc$']
 
 " ============================================
@@ -247,8 +247,6 @@ nnoremap <leader>a :Ack
 " ============================================
 " Tabs handling
 " ============================================
-nnoremap <leader>q :tabp<CR>
-nnoremap <leader>w :tabn<CR>
 nnoremap <leader>e :tabnew<CR>
 
 " ============================================

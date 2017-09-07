@@ -1,7 +1,7 @@
 " ============================================
 " File: vimrc
 " Author: Thibaut Perol <tperol@alumni.harvard.edu>
-" Created: 2016-01-25
+" Created: 2017-09-07
 " ============================================
 " Configuration and Plugins
 "
@@ -15,27 +15,31 @@ filetype off     " required
 " ============================================
 "  basic settings
 " ============================================
-syntax on
 set ruler
+set term=xterm-256color
+set encoding=utf-8
 set background=dark
 set number
 set hidden
 set textwidth=79
-set softtabstop=4
 set shiftround
-set tabstop=4
-set shiftwidth=4
-set expandtab
 set encoding=utf-8
 set spell spelllang=en_us
 set splitright
 set splitbelow
 set backspace=indent,eol,start "delete
-set ai " Auto indent
-set si "Smart indent
-set scrolloff=1 "minimum line between cursor and window edge"
-set showcmd "show partially typed commands"
-set showmatch "show parenthesis matching"
+set ai  " Auto indent
+set si  "Smart indent
+set lbr  " Linebreak on 500 characters"
+set cursorline  " highlight current line
+set scrolloff=1  "minimum line between cursor and window edge"
+set showcmd  "show partially typed commands"
+set showmatch  "show parenthesis matching"
+set cindent
+set cinkeys=0{,0},:,!^F,o,O,e 
+set nojoinspaces  " One space after a "." rather than 2"
+set scrolloff=1  " Minimum lines between cursor and window edge
+set fileformat=unix
 set viminfo='0,\"100,           
 set noerrorbells
 set textwidth=0 
@@ -44,20 +48,29 @@ set ttyfast
 set lazyredraw
 set regexpengine=1
 
+" ============================================
+"  tab related settings
+" ============================================
+
+set smarttab
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
 
 " ============================================
 " Aesthetics
 " ============================================
-" syntax on                       " Use color syntax highlighting.
+syntax on                       " Use color syntax highlighting.
 syntax enable
 filetype plugin on
 filetype indent on
-" colorscheme monokai
 
+" color
 let g:solarized_termtrans=1
 colorscheme solarized
 set bg=dark
-colorscheme solarized
 
 
 " ============================================
@@ -71,6 +84,8 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 "
 " " Plugins
+Plugin 'fholgado/minibufexpl.vim'
+Plugin 'vim-syntastic/syntastic'
 Plugin 'scrooloose/nerdtree'
 Plugin 'benmills/vimux'
 Plugin 'SirVer/ultisnips'
@@ -92,8 +107,8 @@ Plugin 'Lokaltog/vim-easymotion'
 Plugin 'mileszs/ack.vim'
 Plugin 'gregsexton/gitv'
 Plugin 'sjl/gundo.vim'
-Plugin 'Valloric/YouCompleteMe'
 Plugin 'majutsushi/tagbar'
+Plugin 'davidhalter/jedi-vim'
 Plugin 'vim-scripts/MatlabFilesEdition'
 Plugin 'vim-latex/vim-latex'
 "
@@ -149,6 +164,8 @@ while i <= 9
 " Increase the size of the windows
 nnoremap <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+nnoremap <Leader>v+ :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+nnoremap <Leader>v- :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 " Go out of brackets
 inoremap <C-e> <C-o>A
@@ -213,7 +230,6 @@ let NERDTreeIgnore = ['\.pyc$']
 " ============================================
 " Gitv
 " ============================================
-nnoremap <leader>g :Gitv<CR>
 nnoremap <leader>h :Gitv!<CR>
 
 " ============================================
@@ -299,5 +315,7 @@ autocmd bufwritepost,filewritepost *.py execute "normal `a"
 " Tab for YouCompleteMe 
 " ============================================
 let g:ycm_key_list_select_completion = ['<TAB>', '<Down>']
+let g:PyLintCWindow = 1
+let g:PyLintSigns = 1
 
 

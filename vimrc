@@ -86,6 +86,9 @@ Plugin 'gmarik/Vundle.vim'
 " " Plugins
 Plugin 'fholgado/minibufexpl.vim'
 Plugin 'vim-syntastic/syntastic'
+Plugin 'Dimercel/todo-vim'
+Plugin 'tell-k/vim-autopep8'
+Plugin 'heavenshell/vim-pydocstring'
 Plugin 'scrooloose/nerdtree'
 Plugin 'benmills/vimux'
 Plugin 'SirVer/ultisnips'
@@ -110,7 +113,6 @@ Plugin 'sjl/gundo.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'vim-scripts/MatlabFilesEdition'
-Plugin 'tell-k/vim-autopep8'
 Plugin 'vim-latex/vim-latex'
 "
 call vundle#end()
@@ -311,3 +313,25 @@ let g:PyLintSigns = 1
 " Autopep8 mapping 
 " ============================================
 nnoremap <leader>p :Autopep8<CR>
+
+" ============================================
+" Syntastic checker 
+" ============================================
+let g:syntastic_python_checkers = ['flake8']
+
+" ============================================
+" Against slow autocompletion from jedi-vim 
+" ============================================
+let g:pymode_rope = 0
+
+" ============================================
+" Pydocstring 
+" ============================================
+nmap <silent> <C-d> <Plug>(pydocstring)
+
+" ============================================
+" TODO 
+" ============================================
+nmap <leader>l :TODOToggle<CR>
+
+

@@ -111,7 +111,6 @@ Plugin 'mileszs/ack.vim'
 Plugin 'gregsexton/gitv'
 Plugin 'sjl/gundo.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'davidhalter/jedi-vim'
 Plugin 'vim-scripts/MatlabFilesEdition'
 Plugin 'vim-latex/vim-latex'
 "
@@ -318,11 +317,6 @@ nnoremap <leader>p :Autopep8<CR>
 " Syntastic checker 
 " ============================================
 let g:syntastic_python_checkers = ['flake8']
-
-" ============================================
-" Against slow autocompletion from jedi-vim 
-" ============================================
-let g:pymode_rope = 0
 
 " ============================================
 " Pydocstring 

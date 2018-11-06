@@ -316,7 +316,8 @@ nnoremap <leader>p :Autopep8<CR>
 " ============================================
 " Syntastic checker 
 " ============================================
-let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_mode_map = { 'mode': 'passive'}
+let g:syntastic_python_checkers = ['pylint']
 
 " ============================================
 " Pydocstring 
@@ -328,4 +329,12 @@ nmap <silent> <C-d> <Plug>(pydocstring)
 " ============================================
 nmap <leader>l :TODOToggle<CR>
 
+" ============================================
+" Insert pdb.set_trace() 
+" ============================================
+ map <Leader>pdb :call InsertLine()<CR>
 
+function! InsertLine()
+    let trace = expand("import pdb; pdb.set_trace()")
+    execute "normal o".trace
+endfunction
